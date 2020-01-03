@@ -1,0 +1,7 @@
+/target/
+/data/db/*
+HELP.md
+
+.project
+.classpath
+.settings/

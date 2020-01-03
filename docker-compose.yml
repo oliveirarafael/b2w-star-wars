@@ -1,0 +1,10 @@
+version: "2.2"
+
+services: 
+    mongodb:
+      image: mongo
+      container_name: dev-mongo-start-wars
+      ports: 
+       - "27017:27017" 
+      volumes:
+       - ./data/db:/data/db
