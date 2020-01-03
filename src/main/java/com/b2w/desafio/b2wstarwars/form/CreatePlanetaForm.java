@@ -27,10 +27,10 @@ public class CreatePlanetaForm {
     }
 
     public Planeta converte(){
-        return new Planeta(nome, clima, terreno, getQuantidadeFile());
+        return new Planeta(nome, clima, terreno, getQuantidadeFilmes());
     }
 
-	private Long getQuantidadeFile() {
-		return null;
+	private Long getQuantidadeFilmes() {
+		return 1L;
 	}
 }

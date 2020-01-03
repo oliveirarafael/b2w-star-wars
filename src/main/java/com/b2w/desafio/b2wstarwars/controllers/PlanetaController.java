@@ -5,6 +5,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +40,8 @@ public class PlanetaController {
        return PlanetaDTO.converte(repository.findAll(paginacao));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getId(String id){
+    @GetMapping("/id/{id}")
+    public ResponseEntity getId(@PathVariable String id){
         Optional<Planeta> optional = repository.findById(id);
 
         if(optional.isPresent()){
@@ -49,14 +50,11 @@ public class PlanetaController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping
-    public ResponseEntity getNome(@RequestParam String nome){
-        Optional<List<Planeta>> optional = repository.findByNome(nome);
-
-        if(optional.isPresent()){
-           return null;//ResponseEntity.ok(new PlanetaDTO(optional.get()));
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping("/nome")
+    public Page<PlanetaDTO> getNome(@PageableDefault(sort = "nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao, 
+                                    @RequestParam(required = true) String nome){
+        Page<Planeta> planetas = repository.findByNome(nome, paginacao);
+        return PlanetaDTO.converte(planetas);
     }
 
     @PostMapping
@@ -64,10 +62,17 @@ public class PlanetaController {
         Planeta planetaCadastrado = repository.save(planetaForm.converte());
         URI uri = uriBuilder.path("/planetas/{id}").buildAndExpand(planetaCadastrado.getId()).toUri();
         return ResponseEntity.created(uri).body(planetaCadastrado);
+    }
 
-    @DeleteMapping
-    public ResponseEntity delete(){
-      return null;
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable String id){
+        Optional<Planeta> optional = repository.findById(id);
+		if (optional.isPresent()) {
+			repository.deleteById(id);
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.notFound().build();
     }
     
 }
