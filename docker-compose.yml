@@ -5,6 +5,4 @@ services:
       image: mongo
       container_name: dev-mongo-start-wars
       ports: 
-       - "27017:27017" 
-      #volumes:
-       #- ./data/db:/data/db
+       - "27017:27017"

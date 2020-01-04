@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -36,11 +37,18 @@ public class PlanetaController {
     private PlanetaRepository repository;
 
     @GetMapping
-    public Page<PlanetaDTO> get(@PageableDefault(sort = "nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao){
-       return PlanetaDTO.converte(repository.findAll(paginacao));
+    public Page<PlanetaDTO> get(@PageableDefault(sort = "nome", direction = Direction.ASC, 
+                                                 page = 0, size = 10) Pageable paginacao, 
+                                @RequestParam(required = false) String nome){
+       if(nome == null){
+          return PlanetaDTO.converte(repository.findAll(paginacao));
+       }else{
+          Page<Planeta> planetas = repository.findByNome(nome, paginacao);
+          return PlanetaDTO.converte(planetas);
+       }
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getId(@PathVariable String id){
         Optional<Planeta> optional = repository.findById(id);
 
@@ -48,13 +56,6 @@ public class PlanetaController {
            return ResponseEntity.ok(new PlanetaDTO(optional.get()));
         }
         return ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/nome")
-    public Page<PlanetaDTO> getNome(@PageableDefault(sort = "nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao, 
-                                    @RequestParam(required = true) String nome){
-        Page<Planeta> planetas = repository.findByNome(nome, paginacao);
-        return PlanetaDTO.converte(planetas);
     }
 
     @PostMapping

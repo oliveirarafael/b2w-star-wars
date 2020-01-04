@@ -29,7 +29,7 @@ public class PlanetaRepositoryTest {
         planeta.setNome("Alderaan");
         planeta.setTerreno("grasslands");
         planeta.setClima("temperate");
-        planeta.setQuantidadeFilme(2L);
+        planeta.setQuantidadeFilme(2);
 
         Planeta planetaSalvo = repository.save(planeta);
 

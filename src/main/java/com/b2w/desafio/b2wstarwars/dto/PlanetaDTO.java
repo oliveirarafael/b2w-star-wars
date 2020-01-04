@@ -12,7 +12,7 @@ public class PlanetaDTO {
     private String nome;
     private String clima;
     private String terreno;
-    private Long quantidadeFilme;
+    private Integer quantidadeFilme;
 
     public PlanetaDTO(Planeta planeta){
        this.id = planeta.getId();
@@ -34,7 +34,7 @@ public class PlanetaDTO {
 	public String getTerreno() {
 		return terreno;
 	}
-	public Long getQuantidadeFilme() {
+	public Integer getQuantidadeFilme() {
 		return quantidadeFilme;
     }
     

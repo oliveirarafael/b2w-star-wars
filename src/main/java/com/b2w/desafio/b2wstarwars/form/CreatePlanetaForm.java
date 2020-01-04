@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.b2w.desafio.b2wstarwars.models.Planeta;
+import com.b2w.desafio.b2wstarwars.services.SWAPIService;
 
 public class CreatePlanetaForm {
 
@@ -30,7 +31,7 @@ public class CreatePlanetaForm {
         return new Planeta(nome, clima, terreno, getQuantidadeFilmes());
     }
 
-	private Long getQuantidadeFilmes() {
-		return 1L;
+	private Integer getQuantidadeFilmes() {
+		return SWAPIService.planeta(nome).get().filmes();
 	}
 }

@@ -9,12 +9,12 @@ public class Planeta {
    private String nome;
    private String clima;
    private String terreno;
-   private Long quantidadeFilme;
+   private Integer quantidadeFilme;
 
    public Planeta() {
    }
    
-   public Planeta(String nome, String clima, String terreno, Long quantidadeFilme) {
+   public Planeta(String nome, String clima, String terreno, Integer quantidadeFilme) {
    	this.nome = nome;
    	this.clima = clima;
    	this.terreno = terreno;
@@ -54,11 +54,11 @@ public class Planeta {
       this.terreno = terreno;
    }
    
-   public Long getQuantidadeFilme() {
+   public Integer getQuantidadeFilme() {
       return quantidadeFilme;
    }
 
-   public void setQuantidadeFilme(Long quantidadeFilme) {
+   public void setQuantidadeFilme(Integer quantidadeFilme) {
       this.quantidadeFilme = quantidadeFilme;
    }
    
